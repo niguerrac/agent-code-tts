@@ -1,0 +1,12 @@
+# Runtime files (auto-managed)
+hooks/tts_queue.jsonl
+hooks/tts_state.json
+hooks/tts_worker.pid
+hooks/tts.log
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.tmp
+*.mp3
