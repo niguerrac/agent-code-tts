@@ -1,0 +1,8 @@
+{
+  "voice": "es-MX-DaliaNeural",
+  "rate": "+0%",
+  "volume": "+0%",
+  "pitch": "+10Hz",
+  "max_chars": 1500,
+  "enabled": true
+}
