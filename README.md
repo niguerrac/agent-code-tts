@@ -5,7 +5,7 @@
 
 Built for **Claude Code** · Compatible with **OpenCode** and **Kimi Code** *(coming soon)*
 
-**By [Nilson Guerra](https://github.com/niguerrac)**
+**By [Nilson Guerra](https://github.com/niguerrac)** · **[delpyx-digital](https://github.com/delpyx-digital)**
 
 ---
 
@@ -24,7 +24,7 @@ Built for **Claude Code** · Compatible with **OpenCode** and **Kimi Code** *(co
 
 **1. Clone and install:**
 ```bash
-git clone https://github.com/niguerrac/agent-code-tts.git
+git clone https://github.com/delpyx-digital/agent-code-tts.git
 cd agent-code-tts
 python install.py
 ```
@@ -225,4 +225,4 @@ tts_state.json cleared for next turn
 
 ## 📄 License
 
-MIT © [Nilson Guerra](https://github.com/niguerrac)
+MIT © [Nilson Guerra](https://github.com/niguerrac) / [delpyx-digital](https://github.com/delpyx-digital)
