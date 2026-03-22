@@ -3,10 +3,10 @@
 agent-code-tts — Instalador automático para Claude Code (Windows)
 
 Autor: Nilson Guerra (github.com/niguerrac)
-Proyecto: https://github.com/niguerrac/agent-code-tts
+Proyecto: https://github.com/delpyx-digital/agent-code-tts
 
 Copia los hooks a ~/.claude/hooks/ y actualiza ~/.claude/settings.json
-para registrar los hooks de PreToolUse y Stop.
+para registrar los hooks de PreToolUse y Stop, y el MCP server.
 """
 import os, sys, json, shutil, subprocess
 
@@ -20,6 +20,7 @@ HOOK_FILES  = [
     "tts.py", "tts.sh",
     "tts_pretools.py", "tts_pretools.sh",
     "tts_worker.py",
+    "tts_mcp_server.py",
     "tts_config.json",
 ]
 
@@ -35,7 +36,7 @@ def err(msg):  print(f"{RED}✘{RESET} {msg}")
 
 def install_dependencies():
     print("\n📦 Instalando dependencias Python...")
-    packages = ["edge-tts", "pygame", "playsound==1.2.2"]
+    packages = ["edge-tts", "pygame", "playsound==1.2.2", "mcp"]
     result = subprocess.run(
         [sys.executable, "-m", "pip", "install"] + packages,
         capture_output=True, text=True
@@ -121,6 +122,16 @@ def update_settings():
     else:
         warn("Hook Stop ya estaba registrado")
 
+    # MCP Server
+    mcp_servers = settings.setdefault("mcpServers", {})
+    hooks_win = HOOKS_DST.replace("/", "\\")
+    mcp_entry = {"command": "python", "args": [os.path.join(hooks_win, "tts_mcp_server.py")]}
+    if "agent-code-tts" not in mcp_servers:
+        mcp_servers["agent-code-tts"] = mcp_entry
+        ok("MCP server registrado (agent-code-tts)")
+    else:
+        warn("MCP server ya estaba registrado")
+
     with open(SETTINGS, "w", encoding="utf-8") as f:
         json.dump(settings, f, indent=2, ensure_ascii=False)
     ok(f"settings.json actualizado")
@@ -141,10 +152,11 @@ def main():
     update_settings()
 
     print(f"\n{GREEN}✔ Instalación completa.{RESET}")
-    print("  Reinicia Claude Code para que los hooks surtan efecto.")
+    print("  Reinicia Claude Code para que los hooks y MCP server surtan efecto.")
     print(f"\n  Voz activa: es-MX-DaliaNeural")
     print(f"  Config en: {os.path.join(HOOKS_DST, 'tts_config.json')}")
     print(f"  Log en:    {os.path.join(HOOKS_DST, 'tts.log')}")
+    print(f"\n  MCP tools disponibles: tts_speak, tts_status, tts_configure")
 
 
 if __name__ == "__main__":
